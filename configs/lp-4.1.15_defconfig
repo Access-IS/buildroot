@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2018.02-git-00569-gf208f05 Configuration
+# Buildroot 2018.02-git-00570-g3f8c0b6 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 BR2_HOST_GCC_AT_LEAST_4_5=y
@@ -2136,8 +2136,7 @@ BR2_PACKAGE_MONGREL2_LIBC_SUPPORTS=y
 #
 # -------------------------------------------------------
 #
-BR2_PACKAGE_OPKG=y
-# BR2_PACKAGE_OPKG_GPG_SIGN is not set
+# BR2_PACKAGE_OPKG is not set
 
 #
 # Real-Time
