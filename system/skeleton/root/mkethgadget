@@ -1,0 +1,28 @@
+#!/bin/bash
+modprobe libcomposite
+mount -t configfs none /sys/kernel/config
+mkdir /sys/kernel/config/usb_gadget/g1
+cd /sys/kernel/config/usb_gadget/g1 
+echo 0x1d6b > idVendor # Linux Foundation
+echo 0x0104 > idProduct # Multifunction Composite Gadget
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB # USB2
+mkdir -p strings/0x409
+echo "fedcba9876543210" > strings/0x409/serialnumber
+echo "Access IS" > strings/0x409/manufacturer 
+echo "NFS link and console" > strings/0x409/product 
+mkdir -p functions/acm.usb0
+mkdir -p functions/ecm.usb0
+mkdir -p configs/c.1/strings/0x409
+echo "66:AC:4F:48:B3:96" > functions/ecm.usb0/host_addr
+echo "Config 1: ECM network" > configs/c.1/strings/0x409/configuration 
+echo 250 > configs/c.1/MaxPower 
+ln -s functions/acm.usb0 configs/c.1/
+ln -s functions/ecm.usb0 configs/c.1/
+echo "ci_hdrc.0" > /sys/kernel/config/usb_gadget/g1/UDC
+echo 'GS0::respawn:/sbin/getty -L ttyGS0 115200 vt100' >> /etc/inittab
+echo 'ttyGS0' >> /etc/securetty
+kill -HUP 1
+ifconfig lo up
+ifconfig usb0 192.168.99.2 netmask 255.255.255.0 up
+exit 0
