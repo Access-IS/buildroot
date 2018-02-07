@@ -3,4 +3,9 @@ echo "configuring  rootfs"
 cat > output/target/etc/exports <<EOF
 /opt     *(rw,sync,no_subtree_check,no_root_squash)
 EOF
+# remove proc mount entry (already done before switch_root)
+sed -i '/si0/d' output/target/etc/inittab
+# remove remount rw entry too
+sed -i '/si1/d' output/target/etc/inittab
+
 
