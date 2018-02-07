@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "configuring  rootfs"
 cat > output/target/etc/exports <<EOF
-/opt     *(rw,sync,no_subtree_check)
+/opt     *(rw,sync,no_subtree_check,no_root_squash)
 EOF
 
