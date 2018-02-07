@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2018.02-git-g442488a-dirty Configuration
+# Buildroot 2018.02-git-g0a6efb6 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 BR2_HOST_GCC_AT_LEAST_4_5=y
@@ -686,10 +686,7 @@ BR2_PACKAGE_E2FSPROGS_RESIZE2FS=y
 # BR2_PACKAGE_MMC_UTILS is not set
 # BR2_PACKAGE_MTD is not set
 # BR2_PACKAGE_MTOOLS is not set
-BR2_PACKAGE_NFS_UTILS=y
-# BR2_PACKAGE_NFS_UTILS_RPCDEBUG is not set
-# BR2_PACKAGE_NFS_UTILS_RPC_LOCKD is not set
-# BR2_PACKAGE_NFS_UTILS_RPC_RQUOTAD is not set
+# BR2_PACKAGE_NFS_UTILS is not set
 # BR2_PACKAGE_NILFS_UTILS is not set
 # BR2_PACKAGE_NTFS_3G is not set
 # BR2_PACKAGE_SP_OOPS_EXTRACT is not set
