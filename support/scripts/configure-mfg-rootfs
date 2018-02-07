@@ -45,4 +45,22 @@ EOF
 
 chmod +x output/target/root/gadget
 
+cat > output/target/etc/init.d/S91gadget <<EOF
+#! /bin/sh
+# 
+#  invoke gadets 
+#  
+
+case "\$1" in
+	start)
+		/root/gadget
+		;;
+	stop)
+		;;
+	*)
+		exit 1
+		;;
+esac
+EOF
+
 
