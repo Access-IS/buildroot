@@ -63,4 +63,5 @@ case "\$1" in
 esac
 EOF
 
+chmod +x output/target/etc/init.d/S91gadget
 
