@@ -2,7 +2,7 @@
 echo "configuring  rootfs"
 rm output/target/etc/init.d/S21mtdmnt
 
-cat > /output/target/root/gadget <<EOF
+cat > output/target/root/gadget <<EOF
 #!/bin/bash
 modprobe libcomposite
 mount -t configfs none /sys/kernel/config
