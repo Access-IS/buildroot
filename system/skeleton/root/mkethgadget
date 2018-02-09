@@ -23,8 +23,6 @@ ln -s functions/acm.usb0 configs/c.1/
 ln -s functions/ecm.usb0 configs/c.1/
 #ln -s functions/mass_storage.usb0 configs/c.1/
 echo "ci_hdrc.0" > /sys/kernel/config/usb_gadget/g1/UDC
-echo 'GS0::respawn:/sbin/getty -L ttyGS0 115200 vt100' >> /etc/inittab
-kill -HUP 1
 ifconfig lo up
 ifconfig usb0 192.168.99.2 netmask 255.255.255.0 up
 exit 0

@@ -7,6 +7,8 @@ EOF
 sed -i '/si0/d' output/target/etc/inittab
 # remove remount rw entry too
 sed -i '/si1/d' output/target/etc/inittab
+# add GS0
+echo 'GS0::respawn:/sbin/getty -L ttyGS0 115200 vt100' >> output/target/etc/inittab
 rm output/target/etc/dropbear
 mkdir output/target/etc/dropbear
 cp system/dropbear_ecdsa_host_key output/target/etc/dropbear/
