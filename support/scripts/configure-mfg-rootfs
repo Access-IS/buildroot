@@ -36,10 +36,6 @@ ln -s functions/mass_storage.usb2 configs/c.1/
 ln -s functions/mass_storage.usb3 configs/c.1/
 ln -s functions/mass_storage.usb4 configs/c.1/
 echo "ci_hdrc.0" > /sys/kernel/config/usb_gadget/g1/UDC
-echo 'GS0::respawn:/sbin/getty -L ttyGS0 115200 vt100' >> /etc/inittab
-echo 'console' > /etc/securetty
-echo 'ttyGS0' >> /etc/securetty
-kill -HUP 1
 exit 0
 EOF
 
