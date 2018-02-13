@@ -16,7 +16,7 @@ if [ ! -L xterm-256color ]; then
 fi
 cd -
 
-cat > /root/gadget <<EOF
+cat > output/target/root/gadget <<EOF
 #!/bin/bash
 modprobe libcomposite
 mount -t configfs none /sys/kernel/config
