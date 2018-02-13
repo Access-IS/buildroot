@@ -26,5 +26,3 @@ shd2:06:wait:/bin/umount -a -r
 hlt0:0:wait:/sbin/halt -dhp
 reb0:6:wait:/sbin/reboot
 
-# Support for ttyACM0
-GS0::respawn:/sbin/getty -L ttyGS0 115200 vt100
