@@ -7,7 +7,8 @@ Online documentation can be found at http://buildroot.org/docs.html
 
 To build the kernel and rootfilesystem for swallow boards, do the following:
 
-make sure you have build the sdk first, and that it resides in $(HOME)/sdk
+make sure you have build the sdk first, git@10.1.30.30:Lalith/sdk.git
+and that it resides in $(HOME)/sdk
 
 
 1) run 'make distclean ; make swallow_defconfig'
