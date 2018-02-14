@@ -14,10 +14,10 @@ make sure you have build the sdk first, and that it resides in $(HOME)/sdk
 2) run 'make'
 3) wait till it compiles
 4) find the kernel (zImage), root filesystem (root.xxxxxx) MD5SUM  in output/images
-5) 
+5) copy both root.xxxxxx AND MD5SUM files to /dev/mtdblock4
 
 The swallow board spi partion 5 (/dev/mtdblock4) should be ext4 formatted. 
-copy root.xxxxxx file, MD5SUM file to the base of the ext4 filesystem ov mtdblock4.
+
 symlink root.xxxxxxx to rootfs.squashfs (this is required by the initram stript in kernel to mount the correct version)
 
 when upgrading replace both root.xxxxxx file AND MD5SUM file, and move the symlink to the new root.xxxxxxx
