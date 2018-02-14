@@ -562,7 +562,10 @@ sdk: world
 	$(TOPDIR)/support/scripts/fix-rpath staging
 	$(INSTALL) -m 755 $(TOPDIR)/support/misc/relocate-sdk.sh $(HOST_DIR)/relocate-sdk.sh
 	echo $(HOST_DIR) > $(HOST_DIR)/share/buildroot/sdk-location
-
+	@$(call MESSAGE,"Creating SDK tar")
+	$(TOPDIR)/support/scripts/sdk-finalize.sh
+	@$(call MESSAGE,"sdk is at output/images/")
+		
 # Compatibility symlink in case a post-build script still uses $(HOST_DIR)/usr
 $(HOST_DIR)/usr: $(HOST_DIR)
 	@ln -snf . $@
