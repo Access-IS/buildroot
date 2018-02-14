@@ -5,22 +5,24 @@ The documentation can be found in docs/manual. You can generate a text
 document with 'make manual-text' and read output/docs/manual/manual.text.
 Online documentation can be found at http://buildroot.org/docs.html
 
-To build and use the buildroot stuff, do the following:
+To build the kernel and rootfilesystem for swallow boards, do the following:
 
-1) run 'make menuconfig'
-2) select the target architecture and the packages you wish to compile
-3) run 'make'
-4) wait while it compiles
-5) find the kernel, bootloader, root filesystem, etc. in output/images
+make sure you have build the sdk first, git@10.1.30.30:Lalith/sdk.git
+and that it resides in $(HOME)/sdk
+
+
+1) run 'make distclean ; make swallow_defconfig'
+2) run 'make'
+3) wait till it compiles
+4) find the kernel (zImage), root filesystem (root.xxxxxx) MD5SUM  in output/images
+5) copy both root.xxxxxx AND MD5SUM files to /dev/mtdblock4
+
+The swallow board spi partion 5 (/dev/mtdblock4) should be ext4 formatted. 
+
+symlink root.xxxxxxx to rootfs.squashfs (this is required by the initram stript in kernel to mount the correct version)
+
+when upgrading replace both root.xxxxxx file AND MD5SUM file, and move the symlink to the new root.xxxxxxx
+
 
 You do not need to be root to build or run buildroot.  Have fun!
 
-Buildroot comes with a basic configuration for a number of boards. Run
-'make list-defconfigs' to view the list of provided configurations.
-
-Please feed suggestions, bug reports, insults, and bribes back to the
-buildroot mailing list: buildroot@buildroot.org
-You can also find us on #buildroot on Freenode IRC.
-
-If you would like to contribute patches, please read
-https://buildroot.org/manual.html#submitting-patches
