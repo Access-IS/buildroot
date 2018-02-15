@@ -7,7 +7,7 @@ EOF
 sed -i '/si0/d' output/target/etc/inittab
 # remove remount rw entry too
 sed -i '/si1/d' output/target/etc/inittab
-rm output/target/etc/dropbear
+rm -rf output/target/etc/dropbear
 mkdir output/target/etc/dropbear
 cp system/dropbear_ecdsa_host_key output/target/etc/dropbear/
 cd output/target/usr/share/terminfo/x/
