@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2018.02-git-g9a1ba6e Configuration
+# Buildroot 2018.02-git-g52d4a0c Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 BR2_HOST_GCC_AT_LEAST_4_5=y
@@ -1407,7 +1407,12 @@ BR2_PACKAGE_LIBAIO_ARCH_SUPPORTS=y
 BR2_PACKAGE_LIBUSB=y
 BR2_PACKAGE_LIBUSB_COMPAT=y
 # BR2_PACKAGE_LIBUSBGX is not set
-# BR2_PACKAGE_LIBV4L is not set
+BR2_PACKAGE_LIBV4L=y
+
+#
+# libv4l JPEG support not enabled
+#
+BR2_PACKAGE_LIBV4L_UTILS=y
 # BR2_PACKAGE_LIBXKBCOMMON is not set
 # BR2_PACKAGE_MRAA is not set
 # BR2_PACKAGE_MTDEV is not set
