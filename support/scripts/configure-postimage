@@ -4,4 +4,12 @@ cd output/images
 md5sum rootfs.squashfs > MD5SUM
 sed -i 's*rootfs*base/rootfs*g' MD5SUM
 mv rootfs.squashfs root.$gitversion
-
+mkdir jffs2
+cp -a MD5SUM jffs2/
+cp -a root.$gitversion jffs2/
+cd jffs2
+ln -s root.$gitversion rootfs.squashfs
+cd -
+mkfs.jffs2 -r jffs2 -e 256 -o jffs2.img
+rm -rf jffs2/
+exit 0
