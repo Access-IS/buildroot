@@ -3,10 +3,14 @@ echo "configuring  rootfs"
 cat > output/target/etc/exports <<EOF
 /opt     *(rw,sync,no_subtree_check,no_root_squash)
 EOF
-# remove proc mount entry (already done before switch_root)
+# remove entries from inittab 
 sed -i '/si0/d' output/target/etc/inittab
-# remove remount rw entry too
 sed -i '/si1/d' output/target/etc/inittab
+sed -i '/shd1/d' output/target/etc/inittab
+sed -i '/shd2/d' output/target/etc/inittab
+
+
+
 rm -rf output/target/etc/dropbear
 mkdir output/target/etc/dropbear
 cp system/dropbear_ecdsa_host_key output/target/etc/dropbear/
@@ -46,5 +50,10 @@ exit 0
 EOF
 
 chmod +x output/target/root/gadget
+
+# create config for uboot-envtools
+cat > output/target/etc/fw_env.config <<EOF
+/dev/mtd1               0xc0000          0x40000         0x40000
+EOF
 
 
