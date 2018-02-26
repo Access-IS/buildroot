@@ -56,4 +56,5 @@ cat > output/target/etc/fw_env.config <<EOF
 /dev/mtd1               0xc0000          0x40000         0x40000
 EOF
 
-
+# add brcm firmware to target
+cp -a system/firmware output/target/lib/
