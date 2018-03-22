@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2018.02-git-gef083f5 Configuration
+# Buildroot 2018.02-git-g7d64cc7 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 BR2_HOST_GCC_AT_LEAST_4_5=y
@@ -2248,7 +2248,7 @@ BR2_PACKAGE_INITSCRIPTS=y
 # BR2_PACKAGE_KMOD is not set
 # BR2_PACKAGE_KVMTOOL is not set
 # BR2_PACKAGE_LIBOSTREE is not set
-# BR2_PACKAGE_LXC is not set
+BR2_PACKAGE_LXC=y
 # BR2_PACKAGE_MONIT is not set
 # BR2_PACKAGE_NCDU is not set
 # BR2_PACKAGE_NUT is not set
