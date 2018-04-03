@@ -21,7 +21,7 @@ fi
 cd -
 
 cat > output/target/root/gadget <<EOF
-#!/bin/bash
+#!/bin/sh
 modprobe libcomposite
 mount -t configfs none /sys/kernel/config
 mkdir /sys/kernel/config/usb_gadget/g1

@@ -10,6 +10,6 @@ cp -a root.$gitversion jffs2/
 cd jffs2
 ln -s root.$gitversion rootfs.squashfs
 cd -
-mkfs.jffs2 -r jffs2 -e 256 -o jffs2.img
+mkfs.jffs2 -r jffs2 -e 64 -o jffs2.img
 rm -rf jffs2/
 exit 0
