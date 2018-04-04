@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Buildroot 2018.02-git-gdaeefe8 Configuration
+# Buildroot 2018.02-git-ge6915d3 Configuration
 #
 BR2_HAVE_DOT_CONFIG=y
 BR2_HOST_GCC_AT_LEAST_4_5=y
@@ -438,7 +438,7 @@ BR2_LINUX_KERNEL_XZ=y
 BR2_LINUX_KERNEL_DTS_SUPPORT=y
 BR2_LINUX_KERNEL_USE_INTREE_DTS=y
 # BR2_LINUX_KERNEL_USE_CUSTOM_DTS is not set
-BR2_LINUX_KERNEL_INTREE_DTS_NAME="imx6dl-swallow"
+BR2_LINUX_KERNEL_INTREE_DTS_NAME="imx6dl-swallow imx6dl-s16"
 # BR2_LINUX_KERNEL_INSTALL_TARGET is not set
 
 #
