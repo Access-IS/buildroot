@@ -62,5 +62,4 @@ EOF
 chmod +x output/target/etc/init.d/S32network
 cp -a support/scripts/create-val output/target/root/
 chmod +x  output/target/root/create-val
-cp -a system/val.mbr output/target/root/
 
