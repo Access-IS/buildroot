@@ -1,7 +1,0 @@
-label: dos
-label-id: 0x413e7427
-device: /dev/mmcblk1
-unit: sectors
-
-/dev/mmcblk1p1 : start=        2048, size=     4194304, type=83
-/dev/mmcblk1p2 : start=     4196352, size=   240080896, type=83

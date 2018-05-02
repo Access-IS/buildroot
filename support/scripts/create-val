@@ -2,7 +2,8 @@
 echo "cleaning partition table"
 dd if=/dev/zero of=/dev/mmcblk1 bs=1M count=10
 echo "creating new partition table"
-sfdisk /dev/mmcblk1 < /root/val.mbr 
+printf "2048,+2G,83\n,,83" | sfdisk /dev/mmcblk1
+ifdisk /dev/mmcblk1 < /root/val.mbr 
 sleep 2 
 echo "creating filesystems .."
 mkfs.ext4 /dev/mmcblk1p1
