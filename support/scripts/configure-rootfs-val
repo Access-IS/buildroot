@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+echo "configuring  rootfs"
+
+# remove entries from inittab 
+sed -i '/si0/d' output/target/etc/inittab
+sed -i '/si1/d' output/target/etc/inittab
+sed -i '/shd1/d' output/target/etc/inittab
+sed -i '/shd2/d' output/target/etc/inittab
+
+
+
+rm -rf output/target/etc/dropbear
+mkdir output/target/etc/dropbear
+cp system/dropbear_ecdsa_host_key output/target/etc/dropbear/
+cd output/target/usr/share/terminfo/x/
+if [ ! -L xterm-256color ]; then
+	ln -s xterm-color xterm-256color
+fi
+cd -
+
+# add brcm firmware to target
+cp -a system/firmware output/target/lib/
+rm -rf output/target/etc/init.d/S90pwm
+
+# add network config
+cat > output/target/etc/init.d/S32network  <<EOF
+#! /bin/sh
+
+NAME=network
+
+case "\$1" in
+  start)
+    printf "Starting \$NAME: "
+	/sbin/ifconfig lo 127.0.0.1 up
+	/sbin/ifconfig eth0 up
+	/usr/sbin/ethtool -s eth0 duplex full autoneg off speed 100
+	/sbin/udhcpc -i eth0 -s /usr/share/udhcpc/default.script
+    [ \$? = 0 ] && echo "OK" || echo "FAIL"
+    ;;
+  stop)
+    printf "Stopping \$NAME: "
+    kill -9 \`pidof udhcpc\`
+    /sbin/ifconfig eth0 down
+    /sbin/ifconfig lo down
+    [ \$? = 0 ] && echo "OK" || echo "FAIL"
+    ;;
+  restart)
+    echo "Restarting \$NAME: "
+    \$0 stop
+    sleep 1
+    \$0 start
+    ;;
+  *)
+    echo "Usage: \$0 {start|stop|restart}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
+
+EOF
+chmod +x output/target/etc/init.d/S32network
+cp -a support/scripts/create-val output/target/root/
+chmod +x  output/target/root/create-val
+
