@@ -15,7 +15,7 @@ SYSLOG_NG_CONF_ENV = LIBS=-lrt
 SYSLOG_NG_CONF_OPTS = --disable-manpages --localstatedir=/var/run \
 	--disable-java --disable-java-modules --disable-mongodb
 
-# We override busybox's S01logging init script
+# We override busybox's S03logging init script
 ifeq ($(BR2_PACKAGE_BUSYBOX),y)
 SYSLOG_NG_DEPENDENCIES += busybox
 endif
@@ -96,8 +96,8 @@ SYSLOG_NG_CONF_OPTS += --disable-systemd
 endif
 
 define SYSLOG_NG_INSTALL_INIT_SYSV
-	$(INSTALL) -m 0755 -D package/syslog-ng/S01logging \
-		$(TARGET_DIR)/etc/init.d/S01logging
+	$(INSTALL) -m 0755 -D package/syslog-ng/S03logging \
+		$(TARGET_DIR)/etc/init.d/S03logging
 endef
 
 # By default syslog-ng installs a number of sample configuration

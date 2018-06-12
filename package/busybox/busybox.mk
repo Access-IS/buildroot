@@ -219,9 +219,9 @@ endif
 
 define BUSYBOX_INSTALL_LOGGING_SCRIPT
 	if grep -q CONFIG_SYSLOGD=y $(@D)/.config; then \
-		$(INSTALL) -m 0755 -D package/busybox/S01logging \
-			$(TARGET_DIR)/etc/init.d/S01logging; \
-	else rm -f $(TARGET_DIR)/etc/init.d/S01logging; fi
+		$(INSTALL) -m 0755 -D package/busybox/S03logging \
+			$(TARGET_DIR)/etc/init.d/S03logging; \
+	else rm -f $(TARGET_DIR)/etc/init.d/S03logging; fi
 endef
 
 ifeq ($(BR2_INIT_BUSYBOX),y)
