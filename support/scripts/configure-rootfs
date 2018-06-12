@@ -53,14 +53,22 @@ if [ -b "/dev/mtdblock4" ] ;
 then mkdir /.base; mount -t jffs2 /dev/mtdblock4 /.base ;
 fi
 if [ -f /.base/ovl/mach.squash ]; then
-	#check md5
-	echo -n "creating machine overlay .. "
-	mkdir /.lower /.upper /.tmp /petram;
-	mount /.base/ovl/mach.squash /.lower;
-	mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
-	echo "done";
+	if [ -f /.base/ovl/MD5SUM ]; then
+		if  md5sum -s -c /.base/ovl/MD5SUM  ; then
+			echo -n "Creating machine overlay .. "
+			mkdir /.lower /.upper /.tmp /petram;
+			mount /.base/ovl/mach.squash /.lower;
+			mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
+			echo "done";
+		else
+			echo "mach.squash checksum failed, not mounting overlay"
+		fi
+	else
+		echo "mach.squash present but MD5SUM file not found"
+	fi
+	
 else
-	echo "unconfigured system, starting usb gadgets"
+	echo "Unconfigured system, starting usb gadgets"
 	/root/gadget
 fi
 exit 0
