@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 echo "configuring  rootfs"
 
-
 # remove entries from inittab 
 sed -i '/si0/d' output/target/etc/inittab
 sed -i '/si1/d' output/target/etc/inittab
@@ -47,6 +46,25 @@ exit 0
 EOF
 
 chmod +x output/target/root/gadget
+
+cat > output/target/etc/init.d/S01mount <<EOF
+#!/bin/sh
+if [ -b "/dev/mtdblock4" ] ;
+then mkdir /.base; mount -t jffs2 /dev/mtdblock4 /.base ;
+fi
+if [ -f /.base/ovl/mach.squash ] ;
+then
+#check md5
+echo -n "creating machine overlay .. "
+mkdir /.lower /.upper /.tmp /petram;
+mount /.base/ovl/mach.squash /.lower;
+mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
+echo "done";
+fi
+exit 0
+EOF
+
+chmod +x output/target/etc/init.d/S01mount
 
 # create config for uboot-envtools
 cat > output/target/etc/fw_env.config <<EOF
