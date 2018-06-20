@@ -51,7 +51,7 @@ cat > output/target/etc/init.d/S01mount <<EOF
 #
 # Configure machine
 #
-case"\$1" in
+case "\$1" in
 	start)
 		echo "Configuring machine..."
 		if [ -b "/dev/mtdblock4" ];then 
@@ -76,7 +76,7 @@ case"\$1" in
 				echo "mach.squash present but MD5SUM file not found";
 				/root/gadget;
 			fi
-			
+		
 		else
 			echo "Unconfigured system, starting usb gadgets";
 			/root/gadget;
