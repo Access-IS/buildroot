@@ -50,9 +50,17 @@ chmod +x output/target/root/gadget
 cat > output/target/etc/init.d/S01mount <<EOF
 #!/bin/sh
 if [ -b "/dev/mtdblock4" ];then 
-	mkdir /.base; mount -t jffs2 /dev/mtdblock4 /.base ;
-	[ -d /.base/ovl ] || mkdir /.base/ovl ;
-	[ -d /.base/persist ] || mkdir /.base/persist ;
+	mkdir /.base; 
+	if [ mount -t jffs2 /dev/mtdblock4 /.base ] ; then
+		[ -d /.base/ovl ] || mkdir /.base/ovl ;
+		[ -d /.base/persist ] || mkdir /.base/persist ;
+	else
+		echo "creating jffs2 on /dev/mtd4" ;
+		flash_eraseall -j /dev/mtd4 ;
+		mount -t jffs2 /dev/mtdblock4 /.base ;
+		mkdir /.base/ovl ;
+		mkdir /.base/persist ;
+	fi
 fi
 if [ -f /.base/ovl/mach.squash ]; then
 	if [ -f /.base/ovl/MD5SUM ]; then
