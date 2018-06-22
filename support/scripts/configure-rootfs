@@ -68,15 +68,7 @@ case "\$1" in
 					mount /.base/ovl/mach.squash /.lower;
 					mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
                     ln -s /.base/persist /petram/persist
-                    # run any scripts in /petram/init/, sysvinit rcS style.
-                    # they should be sequnced with S* names and contain a start) section
-                    # and executeble
-                    # similar to /etc/init.d/ stuff
-                    if [ -d /petram/init ]; then
-                        for i in /petram/init/S??* ; do
-                            \$i start
-                        done
-                    fi
+                   
                     touch /.base/.load_ok
 					echo "done";
 				else
@@ -101,6 +93,27 @@ exit \$?
 EOF
 
 chmod +x output/target/etc/init.d/S01mount
+
+cat > output/target/etc/init.d/S99user <<EOF
+#
+# run scripts in /petram/init/ if mounted
+#
+case "\$1" in
+	start)
+        if [ -d /petram/init ]; then
+            for i in /petram/init/S??* ; do
+                \$i start
+            done
+        fi
+        ;;
+    *)
+		;;
+                    
+esac
+exit \$?
+EOF
+
+chmod +x output/target/etc/init.d/S99user
 
 # create config for uboot-envtools
 cat > output/target/etc/fw_env.config <<EOF
