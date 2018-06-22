@@ -68,6 +68,15 @@ case "\$1" in
 					mount /.base/ovl/mach.squash /.lower;
 					mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
                     ln -s /.base/persist /petram/persist
+                    # run any scripts in /petram/init/, sysvinit rcS style.
+                    # they should be sequnced with S* names and contain a start) section
+                    # and executeble
+                    # similar to /etc/init.d/ stuff
+                    if [ -d /petram/init ]; then
+                        for i in /petram/init/S??* ; do
+                            \$i start
+                        done
+                    fi
                     touch /.base/.load_ok
 					echo "done";
 				else
