@@ -73,16 +73,16 @@ case "\$1" in
 					echo "done";
 				else
 					echo "mach.squash checksum failed, not mounting overlay";
-					/root/gadget;
+					#/root/gadget;
 				fi
 			else
 				echo "mach.squash present but MD5SUM file not found";
-				/root/gadget;
+				#/root/gadget;
 			fi
 		
 		else
 			echo "Unconfigured system, starting usb gadgets";
-			/root/gadget;
+			#/root/gadget;
 		fi
 		;;
 	
