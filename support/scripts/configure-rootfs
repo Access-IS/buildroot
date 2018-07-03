@@ -144,7 +144,50 @@ EOF
 chmod +x output/target/root/wingadget
 
 
+cat > output/target/root/zrecv.sh << 'EOF'
+#!/bin/sh
 
+trap 'rc=$?; echo "ERR at line ${LINENO} (rc: $rc)"; exit $rc' INT QUIT PIPE TERM HUP
+trap 'rc=$?; echo "EXIT (rc: $rc)"; exit $rc' EXIT
+
+set -e
+
+PORT=`/dev/ttyGS1`
+mkdir -p /tmp/upload
+SYSUPDATEPACKAGE=/tmp/sysupdate.tar.bz2
+
+# send acknowledgement back to host
+echo -ne '\x16M\x0dAISGTL1\x06.' > $PORT
+
+# xmodem
+/usr/bin/rz -Xvc -y $SYSUPDATEPACKAGE >$PORT <$PORT
+bzcat "$SYSUPDATEPACKAGE" | tar -xv -C /tmp
+openssl dgst -sha256 -verify /root/public.pem -signature /tmp/signature /tmp/payload.tar.bz2
+mkdir -p /tmp/payload >/dev/null 2>&1
+bzcat /tmp/payload.tar.bz2 | tar -xv -C /tmp/payload
+chmod 775 /tmp/payload/updatescript.sh
+cd /tmp/payload
+./updatescript.sh
+EOF
+
+chmod +x  output/target/root/zrecv.sh 
+
+cat > output/target/root/public.pem <<EOF
+-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAug6o9ClsGUJXNfNnqDNT
+UzAtljRleSWhDMueLN7nalDWFlQAiMAtAJGaRXJ/bq3MCTuNaKVrm2kRTkQeIRoO
+G9QGsNyrNNZ76554pgpBIFOdRLnoxmqhsTBNsjZyosHL9hV8DO9yX2/JZ1kSTlA2
+hzgymWH7aj5IZrMONb5Iohs5lD3E8W75qGoJC0822txoyiipAQcvrlx1sFQBtpUt
+P+K45FeIlpfnKwpKD8H2v/nAFuRTSNEYPAz95ZIgB5NzwjiwF2p2wrmKNpCnevXJ
+rZ+ZiYwhw8wU8j6C/QXS7HuJB5PdoyBdiy7Knx1anNHgWDMTx5WxGF4VBiiGJkbu
+htoWRETP2l4xM1HdZjYKpcTZ8awMcaEyK8XDLrsxem2bsykbrs5uwtxNNgZ0CVSO
+UGv9yVnIiqLX3F3QFBRmoZd4ACQ7viUuwx1n6i5ngKoPaaftsRWU0UczDOwQ+l4t
+7wu33d7UM0jnoZIqVQY/4ZJogR6upOB2IEAFu/ZSt8mWmPsaj90G8amMYXHY5cRY
+na7/Tp3d+A+pvBpBSikqXy+FobrrVnw4xpGe62Q8ZZireBknjZEnORzjBMpeIlsq
+SwfFbiCYQ5FRcTZYK/oen8OMQMuLFg5iQEZJj6wUFSKIaVlvSLDOCcFVl9nO8oOf
+BGh5X2zV/vtUCBltHHMXye8CAwEAAQ==
+-----END PUBLIC KEY-----
+EOF
 
 cat > output/target/etc/init.d/S01mount <<EOF
 #
