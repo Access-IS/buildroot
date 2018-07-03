@@ -52,6 +52,7 @@ mkdir -p strings/0x409
 echo "43210" > strings/0x409/serialnumber
 mkdir -p functions/mass_storage.usb0
 echo /fat > functions/mass_storage.usb0/lun.0/file
+echo 1 > functions/mass_storage.usb0/stall
 mkdir -p configs/c.1/strings/0x409
 ln -s functions/mass_storage.usb0 configs/c.1/
 echo "ci_hdrc.0" > /sys/kernel/config/usb_gadget/g1/UDC
@@ -191,7 +192,7 @@ case "\$1" in
                             /root/gadget;
                         ;;
                         
-                        windev)
+                        win)
                             /root/wingadget;
                         ;;
                     
@@ -227,7 +228,7 @@ case "\$1" in
                         /root/gadget;
                     ;;
                     
-                    windev)
+                    win)
                         /root/wingadget;
                     ;;
                     
