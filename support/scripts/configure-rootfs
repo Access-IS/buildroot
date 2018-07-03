@@ -152,7 +152,7 @@ trap 'rc=$?; echo "EXIT (rc: $rc)"; exit $rc' EXIT
 
 set -e
 
-PORT=`/dev/ttyGS1`
+PORT=/dev/ttyGS0
 mkdir -p /tmp/upload
 SYSUPDATEPACKAGE=/tmp/sysupdate.tar.bz2
 
@@ -231,6 +231,7 @@ case "\$1" in
                         
                         win)
                             /root/wingadget;
+                            /root/zrecv.sh ;
                         ;;
                     
                     esac
@@ -249,6 +250,7 @@ case "\$1" in
                         
                         win)
                             /root/wingadget;
+                            /root/zrecv.sh ;
                         ;;
                     
                     esac
@@ -267,6 +269,7 @@ case "\$1" in
                     
                     win)
                         /root/wingadget;
+                        /root/zrecv.sh ;
                     ;;
                     
             esac
