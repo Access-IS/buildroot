@@ -66,6 +66,8 @@ cat > output/target/etc/init.d/S01mount <<EOF
 #
 # Configure machine
 #
+rescue_mode=\`fw_printenv -n rescue_mode\`
+
 case "\$1" in
 	start)
 		echo "Configuring machine..."
@@ -90,16 +92,29 @@ case "\$1" in
 					echo "done";
 				else
 					echo "mach.squash checksum failed, not mounting overlay";
-					#/root/gadget;
+                    if [[ "\$rescue_mode" = "uuc" ]]; then
+                        /root/uucgadget;
+                    else
+                        /root/gadget;
+                    fi
+					
 				fi
 			else
 				echo "mach.squash present but MD5SUM file not found";
-				#/root/gadget;
+				if [[ "\$rescue_mode" = "uuc" ]]; then
+                    /root/uucgadget;
+                else
+                    /root/gadget;
+                fi
 			fi
 		
 		else
-			echo "Unconfigured system, starting usb gadgets";
-			#/root/gadget;
+			echo "Unconfigured system, starting \$rescue_mode gadget";
+			if [[ "\$rescue_mode" = "uuc" ]]; then
+                /root/uucgadget;
+            else
+                /root/gadget;
+            fi
 		fi
 		;;
 	
