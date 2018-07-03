@@ -93,7 +93,7 @@ mkdir -p configs/c.1
 mkdir -p configs/c.1/strings/0x409
 echo "CDC ECM+RNDIS" > configs/c.1/strings/0x409/configuration
 
-mkdir -p functions/acm.usb0
+#mkdir -p functions/acm.usb0
 mkdir -p functions/rndis.usb0 # Flippin' Windows
 
 echo "RNDIS" > functions/rndis.usb0/os_desc/interface.rndis/compatible_id
@@ -121,10 +121,6 @@ sleep 5
 # Yank it back
 
 echo "" > UDC
-
-# Sneak in all the extra goodies
-
-ln -s functions/acm.usb0 configs/c.1
 
 
 # Reset bDeviceClass to 0x00
@@ -189,6 +185,31 @@ BGh5X2zV/vtUCBltHHMXye8CAwEAAQ==
 -----END PUBLIC KEY-----
 EOF
 
+cat > output/target/root/prodgadget <<EOF
+#!/bin/bash
+mkdir /sys/kernel/config/usb_gadget/g1
+cd /sys/kernel/config/usb_gadget/g1
+echo 0x1d6b > idVendor 
+echo 0x0104 > idProduct 
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB # USB2
+mkdir -p strings/0x409
+echo "fedcba9876543210" > strings/0x409/serialnumber
+echo "Access IS" > strings/0x409/manufacturer
+echo "multifunction gadget" > strings/0x409/product
+mkdir -p functions/acm.usb0
+mkdir -p configs/c.1/strings/0x409
+echo "Config 1: ACM" > configs/c.1/strings/0x409/configuration
+echo 250 > configs/c.1/MaxPower
+ln -s functions/acm.usb0 configs/c.1/
+echo "ci_hdrc.0" > /sys/kernel/config/usb_gadget/g1/UDC
+exit 0
+EOF
+
+chmod +x output/target/root/prodgadget
+
+
+
 cat > output/target/etc/init.d/S01mount <<EOF
 #
 # Configure machine
@@ -231,9 +252,11 @@ case "\$1" in
                         
                         win)
                             /root/wingadget;
-                            /root/zrecv.sh ;
                         ;;
-                    
+                        
+                        prod)
+                            /root/prodgadget;
+                            /root/zrecv.sh ;
                     esac
 					
 				fi
@@ -250,9 +273,11 @@ case "\$1" in
                         
                         win)
                             /root/wingadget;
-                            /root/zrecv.sh ;
+                
                         ;;
-                    
+                        prod)
+                            /root/prodgadget;
+                            /root/zrecv.sh ;
                     esac
 			fi
 		
@@ -269,6 +294,10 @@ case "\$1" in
                     
                     win)
                         /root/wingadget;
+                    ;;
+                    
+                    prod)
+                        /root/prodgadget;
                         /root/zrecv.sh ;
                     ;;
                     
