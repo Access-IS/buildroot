@@ -94,14 +94,12 @@ mkdir -p configs/c.1/strings/0x409
 echo "CDC ECM+RNDIS" > configs/c.1/strings/0x409/configuration
 
 mkdir -p functions/acm.usb0
-mkdir -p functions/ecm.usb0 # OSX/Linux
 mkdir -p functions/rndis.usb0 # Flippin' Windows
 
 echo "RNDIS" > functions/rndis.usb0/os_desc/interface.rndis/compatible_id
 echo "5162001" > functions/rndis.usb0/os_desc/interface.rndis/sub_compatible_id
-echo "66:AC:4F:48:B3:96" > functions/ecm.usb0/host_addr
 echo "66:AC:4F:48:B3:97" > functions/rndis.usb0/host_addr
-# echo \$MAC_DEV > functions/rndis.usb0/dev_addr
+
 
 # Set up the rndis device only first
 ln -s functions/rndis.usb0 configs/c.1
@@ -127,7 +125,7 @@ echo "" > UDC
 # Sneak in all the extra goodies
 
 ln -s functions/acm.usb0 configs/c.1
-ln -s functions/ecm.usb0 configs/c.1/
+
 
 # Reset bDeviceClass to 0x00
 # This is essential to make it work in Windows 10
@@ -141,11 +139,7 @@ echo "0x00" > bDeviceClass
 echo "ci_hdrc.0" > UDC
 
 ifconfig lo up
-ifconfig usb0 192.168.99.2 up
-ifconfig usb1 192.168.98.2 up
-
-
-
+ifconfig usb0 192.168.98.2 up
 EOF
 chmod +x output/target/root/wingadget
 
