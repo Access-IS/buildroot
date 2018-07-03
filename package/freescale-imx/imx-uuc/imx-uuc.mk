@@ -20,7 +20,7 @@ endef
 define IMX_UUC_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 755 $(@D)/uuc $(TARGET_DIR)/usr/bin/uuc
 	$(INSTALL) -D -m 755 $(@D)/sdimage $(TARGET_DIR)/usr/bin/sdimage
-	dd if=/dev/zero of=$(TARGET_DIR)/fat bs=1M count=1
+	dd if=/dev/zero of=$(TARGET_DIR)/fat bs=1M count=8
 	$(HOST_DIR)/sbin/mkfs.vfat $(TARGET_DIR)/fat
 endef
 
