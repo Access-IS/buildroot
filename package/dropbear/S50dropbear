@@ -45,7 +45,9 @@ restart() {
 
 case "$1" in
   start)
-  	start
+        if grep -q daemon=yes /etc/default/dropbear ; then
+  	    start
+        fi
 	;;
   stop)
   	stop

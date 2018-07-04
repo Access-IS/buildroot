@@ -248,6 +248,7 @@ case "\$1" in
                         ;;
                         
                         dev)
+                            echo "daemon=yes" > /etc/default/dropbear ;
                             /root/gadget;
                         ;;
                         
@@ -270,6 +271,7 @@ case "\$1" in
                         ;;
                         
                         dev)
+                            echo "daemon=yes" > /etc/default/dropbear ;
                             /root/gadget;
                         ;;
                         
@@ -292,6 +294,7 @@ case "\$1" in
                     ;;
                     
                     dev)
+                        echo "daemon=yes" > /etc/default/dropbear ;
                         /root/gadget;
                     ;;
                     
@@ -346,6 +349,7 @@ EOF
 # add brcm firmware to target - only for wifi version
 #cp -a system/firmware output/target/lib/
 
-# add conditional for uuc deaemon
+# add conditional for uuc , dropbear daemons
 mkdir output/target/etc/default
 echo "daemon=no" > output/target/etc/default/uuc
+echo "daemon=no" > output/target/etc/default/dropbear
