@@ -234,7 +234,6 @@ case "\$1" in
 					mkdir /.lower /.upper /.tmp /petram;
 					mount /.base/ovl/mach.squash /.lower;
 					mount -t overlay -o lowerdir=/.lower,upperdir=/.upper,workdir=/.tmp  overlay /petram;
-                    ln -s /.base/persist /petram/persist
                    
                     touch /.base/.load_ok
 					echo "done";
