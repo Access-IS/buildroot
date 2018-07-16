@@ -253,6 +253,7 @@ case "\$1" in
                         ;;
                         
                         win)
+                            echo "daemon=yes" > /etc/default/dropbear ;
                             /root/wingadget;
                         ;;
                         
@@ -276,6 +277,7 @@ case "\$1" in
                         ;;
                         
                         win)
+                            echo "daemon=yes" > /etc/default/dropbear ;
                             /root/wingadget;
                 
                         ;;
@@ -299,6 +301,7 @@ case "\$1" in
                     ;;
                     
                     win)
+                        echo "daemon=yes" > /etc/default/dropbear ;
                         /root/wingadget;
                     ;;
                     
