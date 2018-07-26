@@ -67,7 +67,7 @@ case "\$1" in
   start)
     echo "wait 5 seconds for usb device to settle"
     sleep 5
-    if [ \`readlink -f /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82\` ]       
+    if [ \`readlink -f /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82\` ]  ;    
     then
         echo "install disk present, starting installation"
         [ -d /install ] || mkdir /install
@@ -77,6 +77,8 @@ case "\$1" in
             \$i
     
         done
+    else
+        echo "install disk not present, continuing rescue system"
     fi	
     ;;
  
