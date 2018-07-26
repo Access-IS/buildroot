@@ -68,10 +68,14 @@ case "\$1" in
     if [ \`findfs UUID=372796f1-e9ee-4922-8363-c85466c06e82\` ]       
     then
         echo "install disk present, starting installation"
-
-
-
-
+        [ -d /install ] || mkdir /install
+        mount /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82 /install
+        
+        for i in /install/init/S??* ;do
+            \$i
+    
+        done
+        
 
     fi	
     ;;
