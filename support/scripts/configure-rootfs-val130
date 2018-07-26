@@ -57,5 +57,33 @@ exit 0
 
 EOF
 chmod +x output/target/etc/init.d/S32network
-cp -a support/scripts/create-val130 output/target/root/
-chmod +x  output/target/root/create-val130
+
+cat > output/target/etc/init.d/S99install  <<EOF
+#! /bin/sh
+
+
+
+case "\$1" in
+  start)
+    if [ \`findfs UUID=372796f1-e9ee-4922-8363-c85466c06e82\` ]       
+    then
+        echo "install disk present, starting installation"
+
+
+
+
+
+    fi	
+    ;;
+ 
+  *)
+    echo "Usage: \$0 {start}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
+
+EOF
+chmod +x output/target/etc/init.d/S99install
+
