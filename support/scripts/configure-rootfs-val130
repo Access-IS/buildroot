@@ -65,7 +65,9 @@ cat > output/target/etc/init.d/S99install  <<EOF
 
 case "\$1" in
   start)
-    if [ \`findfs UUID=372796f1-e9ee-4922-8363-c85466c06e82\` ]       
+    echo "wait 5 seconds for usb device to settle"
+    sleep 5
+    if [ \`readlink -f /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82\` ]       
     then
         echo "install disk present, starting installation"
         [ -d /install ] || mkdir /install
@@ -75,8 +77,6 @@ case "\$1" in
             \$i
     
         done
-        
-
     fi	
     ;;
  
@@ -90,4 +90,5 @@ exit 0
 
 EOF
 chmod +x output/target/etc/init.d/S99install
-
+mkdir -p output/target/etc/default
+echo "daemon=yes" > output/target/etc/default/dropbear
