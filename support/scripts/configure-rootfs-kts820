@@ -17,4 +17,42 @@ rm -rf output/target/etc/init.d/S90pwm
 rm -rf output/target/etc/init.d/S80imx-uuc
 rm -rf output/target/etc/init.d/S40network
 
+cat > output/target/etc/init.d/S32network  <<EOF
+#! /bin/sh
+
+NAME=network
+
+case "\$1" in
+  start)
+    printf "Starting \$NAME: "
+	/sbin/ifconfig lo 127.0.0.1 up
+	/sbin/ifconfig eth0 up
+    while  [ "$(cat /sys/class/net/eth0/operstate )" == "down" ]; do   sleep 1; echo -n .; done
+    udhcpc -i eth0
+    [ \$? = 0 ] && echo "OK" || echo "FAIL"
+    ;;
+  stop)
+    printf "Stopping \$NAME: "
+    kill -9 \`pidof udhcpc\`
+    /sbin/ifconfig eth0 down
+    /sbin/ifconfig lo down
+    [ \$? = 0 ] && echo "OK" || echo "FAIL"
+    ;;
+  restart)
+    echo "Restarting \$NAME: "
+    \$0 stop
+    sleep 1
+    \$0 start
+    ;;
+  *)
+    echo "Usage: \$0 {start|stop|restart}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
+
+EOF
+chmod +x output/target/etc/init.d/S32network
+
 
