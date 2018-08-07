@@ -76,6 +76,10 @@ case "\$1" in
     else
         echo "install disk not present, bringing network up"
         udhcpc -i eth0
+        echo "starting web installaltion"
+        wget -q -P /tmp http://10.1.30.30:8000/src/KTS820/current.tar
+        tar -xf /tmp/current.tar -C /
+        /install/S01init
     fi	
     ;;
  
