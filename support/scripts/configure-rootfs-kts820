@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+echo "configuring  rootfs"
+
+# remove entries from inittab 
+sed -i '/si0/d' output/target/etc/inittab
+sed -i '/si1/d' output/target/etc/inittab
+sed -i '/shd1/d' output/target/etc/inittab
+sed -i '/shd2/d' output/target/etc/inittab
+
+cd output/target/usr/share/terminfo/x/
+if [ ! -L xterm-256color ]; then
+	ln -s xterm-color xterm-256color
+fi
+cd -
+
+rm -rf output/target/etc/init.d/S90pwm
+rm -rf output/target/etc/init.d/S80imx-uuc
+rm -rf output/target/etc/init.d/S40network
+
+
