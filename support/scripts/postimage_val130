@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 mv output/images/zImage output/images/zImage-rescue
-
+rm -rf output/images/rootfs.cpio

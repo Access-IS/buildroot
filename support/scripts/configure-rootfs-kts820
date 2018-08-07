@@ -28,7 +28,6 @@ case "\$1" in
 	/sbin/ifconfig lo 127.0.0.1 up
 	/sbin/ifconfig eth0 up
     while  [ "$(cat /sys/class/net/eth0/operstate )" == "down" ]; do   sleep 1; echo -n .; done
-    udhcpc -i eth0
     [ \$? = 0 ] && echo "OK" || echo "FAIL"
     ;;
   stop)
@@ -55,4 +54,39 @@ exit 0
 EOF
 chmod +x output/target/etc/init.d/S32network
 
+cat > output/target/etc/init.d/S99install  <<EOF
+#! /bin/sh
+
+
+
+case "\$1" in
+  start)
+    echo "wait 5 seconds for usb device to settle"
+    sleep 5
+    if [ \`readlink -f /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82\` ]  ;    
+    then
+        echo "install disk present, starting installation"
+        [ -d /install ] || mkdir /install
+        mount /dev/disk/by-uuid/372796f1-e9ee-4922-8363-c85466c06e82 /install
+        
+        for i in /install/init/S??* ;do
+            \$i
+    
+        done
+    else
+        echo "install disk not present, bringing network up"
+        udhcpc -i eth0
+    fi	
+    ;;
+ 
+  *)
+    echo "Usage: \$0 {start}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0
+
+EOF
+chmod +x output/target/etc/init.d/S99install
 
