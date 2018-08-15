@@ -7,11 +7,11 @@ Online documentation can be found at http://buildroot.org/docs.html
 
 To build the kernel and rootfilesystem for swallow boards, do the following:
 
-make sure you have build the sdk first, git@10.1.30.30:Lalith/sdk.git
+make sure you have build the sdk first, git@github.com/Access-IS/sdk.git
 and that it resides in $(HOME)/sdk
 
 
-1) run 'make distclean ; make swallow_defconfig'
+1) run 'make distclean ; make <board>_defconfig'            // where board = val100, val130, kts820, swallow
 2) run 'make'
 3) wait till it compiles
 4) find the kernel (zImage), root filesystem (root.xxxxxx) MD5SUM  in output/images
